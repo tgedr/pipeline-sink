@@ -1,0 +1,22 @@
+{
+  "common": {
+    "azure": {
+      "tokens": {
+        "storage" : {
+          "test" : "gonna-get-it-from-env"
+        }
+      }
+    },
+    "pipelinesink": {
+      "test_queue": {
+        "class": "AzureStorageQueuePipelineSink",
+        "module": "pipelinesink.impl.azure_storage_queue",
+        "config": {
+          "queue": {"value": "unittest0queue"},
+          "connection_string": {"key":  "azure.tokens.storage.test"}
+        }
+      }
+    }
+  }
+}
+

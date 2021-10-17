@@ -1,0 +1,4 @@
+pytest
+configlookup
+azure-storage-queue
+
