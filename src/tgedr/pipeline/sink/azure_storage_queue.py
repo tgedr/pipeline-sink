@@ -1,16 +1,11 @@
-from typing import Dict, Any
+from typing import Any, Dict
 
-from azure.storage.queue import (
-    QueueClient,
-    BinaryBase64EncodePolicy,
-    BinaryBase64DecodePolicy
-)
+from azure.storage.queue import BinaryBase64DecodePolicy, BinaryBase64EncodePolicy, QueueClient
 from tgedr.pipeline.common.common import PipelineConfigException
 from tgedr.pipeline.common.sink import PipelineSink
 
 
 class AzureStorageQueue(PipelineSink):
-
     def __init__(self, config: Dict[str, Any]) -> None:
         super(AzureStorageQueue, self).__init__(config=config)
         self.__client = None
@@ -28,11 +23,12 @@ class AzureStorageQueue(PipelineSink):
     def _get_client(self):
         self.log.info("[AzureStorageQueue._get_client|in]")
         if not self.__client:
-            self.__client = QueueClient.from_connection_string(conn_str=self.__connect_string,
-                                                               queue_name=self.__queue_name,
-                                                               message_encode_policy=BinaryBase64EncodePolicy(),
-                                                               message_decode_policy=BinaryBase64DecodePolicy()
-                                                               )
+            self.__client = QueueClient.from_connection_string(
+                conn_str=self.__connect_string,
+                queue_name=self.__queue_name,
+                message_encode_policy=BinaryBase64EncodePolicy(),
+                message_decode_policy=BinaryBase64DecodePolicy(),
+            )
         self.log.info(f"[AzureStorageQueue._get_client|out] => {self.__client}")
         return self.__client
 
@@ -59,13 +55,5 @@ class AzureStorageQueue(PipelineSink):
         self.log.info(f"[AzureStorageQueue.put|in] ({self.text_fragment(msg) if msg else None})")
         if not self._assert_queue():
             self._create_queue()
-        self._get_client().send_message(msg.encode(encoding='UTF-8', errors='replace'))
+        self._get_client().send_message(msg.encode(encoding="UTF-8", errors="replace"))
         self.log.info("[AzureStorageQueue.put|out]")
-
-
-
-
-
-
-
-
