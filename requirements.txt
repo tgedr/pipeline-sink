@@ -1,4 +1,5 @@
 pytest
 configlookup
+tgedr-pipeline-common==0.1.10
 azure-storage-queue
 
