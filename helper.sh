@@ -88,6 +88,13 @@ code_check()
     isort -rc src test && \
     black src test -t py37 --line-length=120
     return_value="$?"
+    if [ "$return_value" -eq "0" ]; then
+      outdated_packages=$(pip list --outdated --format freeze  | wc -l | awk '{ print $1 }')
+      if [ ! "$outdated_packages" -eq "0" ]; then
+        err "[code_check] outdated packages: $outdated_packages"
+        return_value="1"
+      fi
+    fi
     info "[code_check|out] => ${return_value}"
     [[ ! "$return_value" -eq "0" ]] && exit 1
 }

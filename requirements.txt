@@ -1,5 +1,3 @@
-pytest
-configlookup
-tgedr-pipeline-common==0.1.10
-azure-storage-queue
-
+azure_storage==0.37.0
+configlookup==0.1.7
+pytest==6.2.5
